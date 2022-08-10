@@ -1,0 +1,14 @@
+---
+- name: AWS S3 Bucket Upload - Ansible
+  hosts: localhost
+  tasks:
+  - name: Upload/PUT file to S3 bucket
+    amazon.aws.aws_s3:
+      region: us-west-1
+      bucket: test-bucket-ansible
+      mode: put
+      object: "testuploadfile.txt"
+      src: "testuploadfile.txt"
+    register: putresult
+  - debug: msg="{{ putresult.msg }} and the S3 Object URL is {{putresult.url}}"
+    when: putresult.changed
